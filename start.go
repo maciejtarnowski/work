@@ -15,7 +15,8 @@ func startWork(db *sql.DB, when time.Time) error {
 		return ErrUnfinishedWork
 	}
 
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	_, err = db.ExecContext(ctx, `INSERT INTO work_log(started_at) VALUES ($1)`, when.Unix())
 
 	return err

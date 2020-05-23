@@ -14,7 +14,8 @@ var (
 )
 
 func checkForUnfinished(db *sql.DB) (bool, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
 	var exists bool
 	err := db.QueryRowContext(ctx, `SELECT TRUE FROM work_log WHERE ended_at IS NULL LIMIT 1`).Scan(&exists)
@@ -48,7 +49,8 @@ func connectToDB(path string) (*sql.DB, error) {
 		)
 	`
 
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	_, err = db.ExecContext(ctx, createTablesStmt)
 	if err != nil {
 		return nil, err

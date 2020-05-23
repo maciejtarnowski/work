@@ -57,7 +57,8 @@ func calculateExpected(from time.Time, to time.Time) time.Duration {
 func getTotalDuration(db *sql.DB, from, to time.Time) (time.Duration, error) {
 	var seconds sql.NullInt64
 
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	err := db.QueryRowContext(
 		ctx,
 		`SELECT
@@ -86,7 +87,8 @@ func getTotalDuration(db *sql.DB, from, to time.Time) (time.Duration, error) {
 }
 
 func getDayStats(db *sql.DB, from, to time.Time) ([]DayStats, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	rows, err := db.QueryContext(
 		ctx,
 		`SELECT
@@ -119,7 +121,7 @@ func getDayStats(db *sql.DB, from, to time.Time) ([]DayStats, error) {
 			return nil, err
 		}
 
-		date, err := time.Parse("2006-01-02", dayStr)
+		date, err := time.ParseInLocation("2006-01-02", dayStr, time.Local)
 		if err != nil {
 			return nil, err
 		}
