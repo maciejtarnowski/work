@@ -42,14 +42,15 @@ func (a App) Start() {
 func (a App) Stop() {
 	now := time.Now()
 
-	err := stopWork(a.db, now)
+	result, err := stopWork(a.db, now)
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Printf("Work stopped at %s\n", now.Format(dateLayout))
+	fmt.Printf("Work stopped at %s (after %s)\n", now.Format(dateLayout), result.SessionWorked)
+	fmt.Printf("\nToday:\n\tWorked: %s\n\tTotal: %s\n", result.DayWorked, result.DayTotal)
 }
 
 func (a App) Stats() {
@@ -59,7 +60,7 @@ func (a App) Stats() {
 	if dayOffset == -1 {
 		dayOffset = 6
 	}
-	from := time.Date(now.Year(), now.Month(), now.Day() - int(dayOffset), 0, 0, 0, 0, time.Local)
+	from := time.Date(now.Year(), now.Month(), now.Day()-int(dayOffset), 0, 0, 0, 0, time.Local)
 	to := time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 0, time.Local)
 
 	stats, err := statsWork(a.db, from, to)
