@@ -7,9 +7,9 @@ import (
 )
 
 type DayStats struct {
-	Date time.Time
-	Total time.Duration
-	Worked time.Duration
+	Date     time.Time
+	Total    time.Duration
+	Worked   time.Duration
 	Expected time.Duration
 }
 
@@ -18,8 +18,8 @@ type Stats struct {
 	Worked   time.Duration
 	Expected time.Duration
 	DayStats []DayStats
-	From time.Time
-	To time.Time
+	From     time.Time
+	To       time.Time
 }
 
 func statsWork(db *sql.DB, from, to time.Time) (Stats, error) {
@@ -43,11 +43,11 @@ func statsWork(db *sql.DB, from, to time.Time) (Stats, error) {
 }
 
 func calculateExpected(from time.Time, to time.Time) time.Duration {
-	result := 0*time.Hour
+	result := 0 * time.Hour
 
 	for d := from; d.Day() <= to.Day() && d.Month() <= to.Month() && d.Year() <= to.Year(); d = d.AddDate(0, 0, 1) {
 		if d.Weekday() != time.Sunday && d.Weekday() != time.Saturday {
-			result += 8*time.Hour
+			result += 8 * time.Hour
 		}
 	}
 
@@ -81,7 +81,7 @@ func getTotalDuration(db *sql.DB, from, to time.Time) (time.Duration, error) {
 	}
 
 	if seconds.Valid {
-		return time.Duration(seconds.Int64)*time.Second, nil
+		return time.Duration(seconds.Int64) * time.Second, nil
 	}
 	return 0, nil
 }
@@ -128,8 +128,8 @@ func getDayStats(db *sql.DB, from, to time.Time) ([]DayStats, error) {
 
 		item := DayStats{}
 		item.Date = date
-		item.Expected = 8*time.Hour
-		item.Worked = time.Duration(seconds)*time.Second
+		item.Expected = 8 * time.Hour
+		item.Worked = time.Duration(seconds) * time.Second
 		item.Total = item.Worked - item.Expected
 
 		stats = append(stats, item)

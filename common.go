@@ -10,7 +10,7 @@ import (
 
 var (
 	ErrUnfinishedWork = errors.New("cannot start work when there is unfinished one")
-	ErrFinishedWork = errors.New("cannot stop work when there is no unfinished one")
+	ErrFinishedWork   = errors.New("cannot stop work when there is no unfinished one")
 )
 
 func checkForUnfinished(db *sql.DB) (bool, error) {
@@ -28,7 +28,6 @@ func checkForUnfinished(db *sql.DB) (bool, error) {
 	}
 	return exists, nil
 }
-
 
 func connectToDB(path string) (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", path)
