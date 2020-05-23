@@ -11,7 +11,7 @@ Keep track of how long you've worked each day.
 
 ## Usage
 
-*Warning:* Running any of the commands automatically creates `work.db` file inside your `$HOME` directory.
+**Warning:** Running any of the commands automatically creates `work.db` file inside your `$HOME` directory.
 
 ### Start work
 
@@ -20,12 +20,14 @@ Simply run:
 $ work start
 ```
 
-### Stop or finish work
+### Pause or finish work
 
 Run:
 ```
 $ work stop
 ```
+
+Stats are grouped by day, so it doesn't matter how many times you start and stop your work each day.
 
 ### Display stats
 
