@@ -86,3 +86,21 @@ func (a App) Log() {
 		}
 	}
 }
+
+func (a App) Status() {
+	now := time.Now()
+
+	status, err := workStatus(a.db, now)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	if status.IsActive {
+		fmt.Println("Work: IN PROGRESS")
+	} else {
+		fmt.Println("Work: STOPPED")
+	}
+
+	fmt.Printf("\nToday:\n\tWorked: %s\n\tRemaining: %s\n", status.Worked, status.Remaining)
+}

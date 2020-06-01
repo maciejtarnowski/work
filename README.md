@@ -64,6 +64,30 @@ By day:
 
 It currently assumes that work day equals 8 hours and skips Saturdays and Sundays.
 
+Only finished work sessions are included in the log.
+
+### Work status
+
+Run:
+```
+$ work status
+```
+or shorter:
+```
+$ work st
+```
+
+This command prints the current status of your work, for example:
+```
+Work: IN PROGRESS
+
+Today:
+	Worked: 30m45s
+	Remaining: 7h29m15s
+```
+
+Stats include the ongoing work session.
+
 ## State of the project
 
 It's in prototype/MVP stage. I want to find out how it works for me and decide if I should spend more time developing it.
