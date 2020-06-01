@@ -14,7 +14,7 @@ func main() {
 	defer app.Close()
 
 	if len(os.Args) < 2 {
-		fmt.Print("usage:\n\twork start\n\twork stop\n\twork stats\n")
+		fmt.Print("usage:\n\twork start\n\twork stop\n\twork log\n")
 		return
 	}
 
@@ -25,8 +25,8 @@ func main() {
 		app.Start()
 	case "stop":
 		app.Stop()
-	case "stats":
-		app.Stats()
+	case "log":
+		app.Log()
 	default:
 		fmt.Printf("unknown command: %s\n", strings.TrimSpace(cmd))
 	}

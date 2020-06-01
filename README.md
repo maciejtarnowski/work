@@ -14,7 +14,7 @@ Keep track of how long you've worked each day.
 Requires Go 1.14
 
 ```
-$ go get github.com/maciejtarnowski/work
+$ go get -u github.com/maciejtarnowski/work
 $ go install github.com/maciejtarnowski/work/cmd/work
 ```
 
@@ -43,14 +43,14 @@ $ work stop
 
 Stats are grouped by day, so it doesn't matter how many times you start and stop your work each day.
 
-### Display stats
+### Display log
 
 Run:
 ```
-$ work stats
+$ work log
 ```
 
-The command prints stats for the current week (starting on Monday), for example:
+The command prints work log for the current week (starting on Monday), for example:
 ```
 2020-05-18 - 2020-05-23
 

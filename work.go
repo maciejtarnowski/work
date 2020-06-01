@@ -53,7 +53,7 @@ func (a App) Stop() {
 	fmt.Printf("\nToday:\n\tWorked: %s\n\tTotal: %s\n", result.DayWorked, result.DayTotal)
 }
 
-func (a App) Stats() {
+func (a App) Log() {
 	now := time.Now()
 
 	dayOffset := now.Weekday() - 1
