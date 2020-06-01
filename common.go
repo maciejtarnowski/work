@@ -57,3 +57,10 @@ func connectToDB(path string) (*sql.DB, error) {
 
 	return db, nil
 }
+
+func getSignForPositiveDuration(d time.Duration) string {
+	if d > 0 {
+		return "+"
+	}
+	return ""
+}

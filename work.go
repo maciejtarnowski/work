@@ -50,7 +50,12 @@ func (a App) Stop() {
 	}
 
 	fmt.Printf("Work stopped at %s (after %s)\n", now.Format(dateLayout), result.SessionWorked)
-	fmt.Printf("\nToday:\n\tWorked: %s\n\tTotal: %s\n", result.DayWorked, result.DayTotal)
+	fmt.Printf(
+		"\nToday:\n\tWorked: %s\n\tTotal: %s%s\n",
+		result.DayWorked,
+		getSignForPositiveDuration(result.DayTotal),
+		result.DayTotal,
+	)
 }
 
 func (a App) Log() {
@@ -70,19 +75,23 @@ func (a App) Log() {
 		return
 	}
 
+	total := stats.Total.Round(time.Minute)
+
 	fmt.Printf("%s - %s\n\n", from.Format(dateShortLayout), to.Format(dateShortLayout))
 	fmt.Printf(
-		"Expected: %s\nWorked: %s\nTotal: %s\n",
+		"Expected: %s\nWorked: %s\nTotal: %s%s\n",
 		stats.Expected.Round(time.Minute),
 		stats.Worked.Round(time.Minute),
-		stats.Total.Round(time.Minute),
+		getSignForPositiveDuration(total),
+		total,
 	)
 
 	if len(stats.DayStats) > 0 {
 		fmt.Print("\nBy day:\n")
 
 		for _, day := range stats.DayStats {
-			fmt.Printf("\t%s: %s\n", day.Date.Format(dateShortLayout), day.Total.Round(time.Minute))
+			dayTotal := day.Total.Round(time.Minute)
+			fmt.Printf("\t%s: %s%s\n", day.Date.Format(dateShortLayout), getSignForPositiveDuration(dayTotal), dayTotal)
 		}
 	}
 }
