@@ -43,9 +43,12 @@ func statsWork(db *sql.DB, from, to time.Time) (Stats, error) {
 }
 
 func calculateExpected(from time.Time, to time.Time) time.Duration {
+	fromDate := time.Date(from.Year(), from.Month(), from.Day(), 0, 0, 0, 0, time.UTC)
+	toDate := time.Date(to.Year(), to.Month(), to.Day(), 0, 0, 0, 0, time.UTC)
+
 	result := 0 * time.Hour
 
-	for d := from; d.Day() <= to.Day() && d.Month() <= to.Month() && d.Year() <= to.Year(); d = d.AddDate(0, 0, 1) {
+	for d := fromDate; d.Unix() <= toDate.Unix(); d = d.AddDate(0, 0, 1) {
 		if d.Weekday() != time.Sunday && d.Weekday() != time.Saturday {
 			result += 8 * time.Hour
 		}
