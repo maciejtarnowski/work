@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/maciejtarnowski/work"
 	"os"
@@ -14,7 +15,7 @@ func main() {
 	defer app.Close()
 
 	if len(os.Args) < 2 {
-		fmt.Print("usage:\n\twork start\n\twork stop\n\twork log\n\twork status or st\n")
+		fmt.Print("usage:\n\twork start\n\twork stop\n\twork log [-week-offset=<n>]\n\twork status or st\n")
 		return
 	}
 
@@ -26,7 +27,11 @@ func main() {
 	case "stop":
 		app.Stop()
 	case "log":
-		app.Log()
+		logFlags := flag.NewFlagSet("log", flag.ExitOnError)
+		weekOffset := logFlags.Int("week-offset", 0, "Display log for a week in the past, e.g. 0 is current week, 1 is last week, etc.")
+		logFlags.Parse(os.Args[2:])
+
+		app.Log(*weekOffset)
 	case "status":
 		app.Status()
 	case "st":

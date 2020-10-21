@@ -66,6 +66,23 @@ It currently assumes that work day equals 8 hours and skips Saturdays and Sunday
 
 Only finished work sessions are included in the log.
 
+#### Log for past weeks
+
+You can optionally display log for past weeks using `-week-offset` flag.
+
+The following command displays log for the previous week:
+```
+$ work log -week-offset=1
+2020-05-11 - 2020-05-15
+
+Expected: 40h0m0s
+Worked: 1h5m0s
+Total: -38h55m0s
+
+By day:
+	2020-05-12: -6h55m0s
+```
+
 ### Work status
 
 Run:

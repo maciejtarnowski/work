@@ -82,3 +82,48 @@ func TestExpectedWorkTime(t *testing.T) {
 		}
 	}
 }
+
+func TestLogDateRangeWithOffset(t *testing.T) {
+	tests := []struct {
+		now          time.Time
+		offset       int
+		expectedFrom time.Time
+		expectedTo   time.Time
+	}{
+		{
+			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
+			offset:       0,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 21, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
+			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
+			offset:       2,
+			expectedFrom: time.Date(2020, time.October, 5, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 9, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
+			offset:       3,
+			expectedFrom: time.Date(2020, time.September, 28, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 2, 23, 59, 59, 0, time.UTC),
+		},
+	}
+
+	for _, tt := range tests {
+		from, to := getDateRangeForLog(tt.now, tt.offset)
+
+		if !from.Equal(tt.expectedFrom) {
+			t.Errorf("invalid `from` for now=%s, offset=%d - expected=%s, got=%s", tt.now, tt.offset, tt.expectedFrom, from)
+		}
+		if !to.Equal(tt.expectedTo) {
+			t.Errorf("invalid `to` for now=%s, offset=%d - expected=%s, got=%s", tt.now, tt.offset, tt.expectedTo, to)
+		}
+	}
+}

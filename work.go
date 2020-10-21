@@ -58,15 +58,10 @@ func (a App) Stop() {
 	)
 }
 
-func (a App) Log() {
+func (a App) Log(weekOffset int) {
 	now := time.Now()
 
-	dayOffset := now.Weekday() - 1
-	if dayOffset == -1 {
-		dayOffset = 6
-	}
-	from := time.Date(now.Year(), now.Month(), now.Day()-int(dayOffset), 0, 0, 0, 0, time.Local)
-	to := time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 0, time.Local)
+	from, to := getDateRangeForLog(now, weekOffset)
 
 	stats, err := statsWork(a.db, from, to)
 
