@@ -75,13 +75,13 @@ func (a App) Log() {
 		return
 	}
 
-	total := stats.Total.Round(time.Minute)
+	total := stats.Total
 
 	fmt.Printf("%s - %s\n\n", from.Format(dateShortLayout), to.Format(dateShortLayout))
 	fmt.Printf(
 		"Expected: %s\nWorked: %s\nTotal: %s%s\n",
-		stats.Expected.Round(time.Minute),
-		stats.Worked.Round(time.Minute),
+		stats.Expected,
+		stats.Worked,
 		getSignForPositiveDuration(total),
 		total,
 	)
@@ -90,7 +90,7 @@ func (a App) Log() {
 		fmt.Print("\nBy day:\n")
 
 		for _, day := range stats.DayStats {
-			dayTotal := day.Total.Round(time.Minute)
+			dayTotal := day.Total
 			fmt.Printf("\t%s: %s%s\n", day.Date.Format(dateShortLayout), getSignForPositiveDuration(dayTotal), dayTotal)
 		}
 	}
