@@ -142,17 +142,25 @@ func getDayStats(db *sql.DB, from, to time.Time) ([]DayStats, error) {
 }
 
 func getDateRangeForLog(now time.Time, weekOffset int) (time.Time, time.Time) {
-	dayOffset := int(now.Weekday()) - 1
-	if dayOffset == -1 {
-		dayOffset = 6
+	normWeekday := int(now.Weekday())
+	if normWeekday == 0 {
+		normWeekday = 7
 	}
 
 	var fromOffset, toOffset int
-	fromOffset = dayOffset + (7 * weekOffset)
-	if weekOffset > 0 {
-		toOffset = 7*weekOffset - dayOffset
+
+	if weekOffset == 0 {
+		fromOffset = normWeekday - 1
+		if normWeekday >= 1 && normWeekday <= 5 {
+			toOffset = 0
+		} else if normWeekday == 6 {
+			toOffset = 1
+		} else if normWeekday == 7 {
+			toOffset = 2
+		}
 	} else {
-		toOffset = 0
+		fromOffset = 7 * weekOffset + normWeekday - 1
+		toOffset = (7 * (weekOffset - 1)) + normWeekday + 2
 	}
 
 	from := time.Date(now.Year(), now.Month(), now.Day()-fromOffset, 0, 0, 0, 0, now.Location())

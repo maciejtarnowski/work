@@ -90,29 +90,150 @@ func TestLogDateRangeWithOffset(t *testing.T) {
 		expectedFrom time.Time
 		expectedTo   time.Time
 	}{
+		// offset on Monday
 		{
-			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
+			now:          time.Date(2020, time.October, 26, 8, 0, 0, 0, time.UTC),
 			offset:       0,
-			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
-			expectedTo:   time.Date(2020, time.October, 21, 23, 59, 59, 0, time.UTC),
+			expectedFrom: time.Date(2020, time.October, 26, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 26, 23, 59, 59, 0, time.UTC),
 		},
 		{
-			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
+			now:          time.Date(2020, time.October, 26, 8, 0, 0, 0, time.UTC),
 			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 23, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 26, 8, 0, 0, 0, time.UTC),
+			offset:       2,
+			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
+		},
+		// offset on Tuesday
+		{
+			now:          time.Date(2020, time.October, 27, 8, 0, 0, 0, time.UTC),
+			offset:       0,
+			expectedFrom: time.Date(2020, time.October, 26, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 27, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 27, 8, 0, 0, 0, time.UTC),
+			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 23, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 27, 8, 0, 0, 0, time.UTC),
+			offset:       2,
+			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
+		},
+		// offset on Wednesday
+		{
+			now:          time.Date(2020, time.October, 28, 8, 0, 0, 0, time.UTC),
+			offset:       0,
+			expectedFrom: time.Date(2020, time.October, 26, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 28, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 28, 8, 0, 0, 0, time.UTC),
+			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 23, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 28, 8, 0, 0, 0, time.UTC),
+			offset:       2,
 			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
 			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
 		},
 		{
-			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
-			offset:       2,
+			now:          time.Date(2020, time.October, 28, 8, 0, 0, 0, time.UTC),
+			offset:       3,
 			expectedFrom: time.Date(2020, time.October, 5, 0, 0, 0, 0, time.UTC),
 			expectedTo:   time.Date(2020, time.October, 9, 23, 59, 59, 0, time.UTC),
 		},
 		{
-			now:          time.Date(2020, time.October, 21, 8, 0, 0, 0, time.UTC),
-			offset:       3,
+			now:          time.Date(2020, time.October, 28, 8, 0, 0, 0, time.UTC),
+			offset:       4,
 			expectedFrom: time.Date(2020, time.September, 28, 0, 0, 0, 0, time.UTC),
 			expectedTo:   time.Date(2020, time.October, 2, 23, 59, 59, 0, time.UTC),
+		},
+		// offset on Thursday
+		{
+			now:          time.Date(2020, time.October, 29, 8, 0, 0, 0, time.UTC),
+			offset:       0,
+			expectedFrom: time.Date(2020, time.October, 26, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 29, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 29, 8, 0, 0, 0, time.UTC),
+			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 23, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 29, 8, 0, 0, 0, time.UTC),
+			offset:       2,
+			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
+		},
+		// offset on Friday
+		{
+			now:          time.Date(2020, time.October, 30, 8, 0, 0, 0, time.UTC),
+			offset:       0,
+			expectedFrom: time.Date(2020, time.October, 26, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 30, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 30, 8, 0, 0, 0, time.UTC),
+			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 23, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 30, 8, 0, 0, 0, time.UTC),
+			offset:       2,
+			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
+		},
+		// offset on Saturday
+		{
+			now:          time.Date(2020, time.October, 31, 8, 0, 0, 0, time.UTC),
+			offset:       0,
+			expectedFrom: time.Date(2020, time.October, 26, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 30, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 31, 8, 0, 0, 0, time.UTC),
+			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 23, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.October, 31, 8, 0, 0, 0, time.UTC),
+			offset:       2,
+			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
+		},
+		// offset on Sunday
+		{
+			now:          time.Date(2020, time.November, 1, 8, 0, 0, 0, time.UTC),
+			offset:       0,
+			expectedFrom: time.Date(2020, time.October, 26, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 30, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.November, 1, 8, 0, 0, 0, time.UTC),
+			offset:       1,
+			expectedFrom: time.Date(2020, time.October, 19, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 23, 23, 59, 59, 0, time.UTC),
+		},
+		{
+			now:          time.Date(2020, time.November, 1, 8, 0, 0, 0, time.UTC),
+			offset:       2,
+			expectedFrom: time.Date(2020, time.October, 12, 0, 0, 0, 0, time.UTC),
+			expectedTo:   time.Date(2020, time.October, 16, 23, 59, 59, 0, time.UTC),
 		},
 	}
 
@@ -120,10 +241,10 @@ func TestLogDateRangeWithOffset(t *testing.T) {
 		from, to := getDateRangeForLog(tt.now, tt.offset)
 
 		if !from.Equal(tt.expectedFrom) {
-			t.Errorf("invalid `from` for now=%s, offset=%d - expected=%s, got=%s", tt.now, tt.offset, tt.expectedFrom, from)
+			t.Errorf("invalid `from` for now=%s (%s), offset=%d - expected=%s, got=%s", tt.now, tt.now.Format("Monday"), tt.offset, tt.expectedFrom, from)
 		}
 		if !to.Equal(tt.expectedTo) {
-			t.Errorf("invalid `to` for now=%s, offset=%d - expected=%s, got=%s", tt.now, tt.offset, tt.expectedTo, to)
+			t.Errorf("invalid `to` for now=%s (%s), offset=%d - expected=%s, got=%s", tt.now, tt.now.Format("Monday"), tt.offset, tt.expectedTo, to)
 		}
 	}
 }
