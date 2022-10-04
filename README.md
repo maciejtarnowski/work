@@ -11,7 +11,7 @@ Keep track of how long you've worked each day.
 
 ## Installation
 
-Requires Go 1.14
+Requires Go 1.19
 
 ```
 $ go get -u github.com/maciejtarnowski/work
