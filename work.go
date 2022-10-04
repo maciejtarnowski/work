@@ -106,5 +106,11 @@ func (a App) Status() {
 		fmt.Println("Work: STOPPED")
 	}
 
-	fmt.Printf("\nToday:\n\tWorked: %s\n\tRemaining: %s\n", status.Worked, status.Remaining)
+	fmt.Printf("\nToday:\n\tWorked: %s\n", status.Worked)
+
+	if status.Remaining > 0 {
+		fmt.Printf("\tRemaining: %s\n", status.Remaining)
+	} else {
+		fmt.Printf("\tOvertime: %s\n", status.Remaining.Abs())
+	}
 }
