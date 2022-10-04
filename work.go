@@ -37,6 +37,17 @@ func (a App) Start() {
 	}
 
 	fmt.Printf("Work started at %s\n", now.Format(dateLayout))
+
+	status, err := workStatus(a.db, now)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	if status.Remaining > 0 {
+		fmt.Printf("\tExpected finish at: %s\n", now.Add(status.Remaining).Format(dateLayout))
+	}
 }
 
 func (a App) Stop() {
@@ -110,6 +121,10 @@ func (a App) Status() {
 
 	if status.Remaining > 0 {
 		fmt.Printf("\tRemaining: %s\n", status.Remaining)
+
+		if status.IsActive {
+			fmt.Printf("\tExpected finish at: %s\n", now.Add(status.Remaining).Format(dateLayout))
+		}
 	} else {
 		fmt.Printf("\tOvertime: %s\n", status.Remaining.Abs())
 	}
